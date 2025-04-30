@@ -267,7 +267,7 @@
         <div class="nav-links">
             <a href="#home">Inicio</a>
             <a href="#features">Servicios</a>
-            <a href="#contact">Contacto</a>
+            <a href="#comments">comentarios</a>
         </div>
         <button class="cta-button" onclick="window.location.href='https://bot.orimon.ai/deploy/index.html?tenantId=29f76204-ad03-4a1a-a73f-a9db382d423e&testBot=true&defaultOpen=true';">Chatea con nosotros</button>
     </nav>
@@ -358,10 +358,12 @@
         <section class="comments-section" id="comments">
             <h2>Comentarios</h2>
             <form id="commentForm">
-                <input type="text" id="name" placeholder="Tu nombre" required>
+                <input type="text" id="name" placeholder="Tu nombre - cursor" required>
                 <textarea id="comment" placeholder="Tu comentario" required></textarea>
                 <button type="submit">Enviar Comentario</button>
             </form>
+            <br>
+            <button id="resetButton">↩️​</button> <!-- Botón para reiniciar -->
             <div id="commentsList"></div>
         </section>
 
@@ -399,48 +401,52 @@
             });
         });
 
-        // Función para cargar comentarios desde localStorage
-    function loadComments() {
-        const comments = JSON.parse(localStorage.getItem('comments')) || [];
-        comments.forEach(comment => {
-            displayComment(comment.name, comment.comment);
-        });
-    }
+        // Al cargar la página, asegurarse de que la caja de comentarios esté vacía
+window.onload = function() {
+    loadComments(); // Cargar comentarios almacenados
+};
 
-    // Función para mostrar un comentario en la lista
-    function displayComment(name, comment) {
-        const commentElement = document.createElement('div');
-        commentElement.innerHTML = `<strong>${name}</strong>: <p>${comment}</p>`;
-        commentElement.style.border = '1px solid #ccc';
-        commentElement.style.padding = '10px';
-        commentElement.style.marginTop = '10px';
-        commentElement.style.borderRadius = '5px';
-        document.getElementById('commentsList').appendChild(commentElement);
-    }
-
-    // Cargar comentarios al inicio
-    loadComments();
-
-    document.getElementById('commentForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Evita el envío del formulario
-
-        // Obtiene los valores del formulario
-        const name = document.getElementById('name').value;
-        const comment = document.getElementById('comment').value;
-
-        // Guarda el comentario en el almacenamiento local
-        const comments = JSON.parse(localStorage.getItem('comments')) || [];
-        comments.push({ name, comment });
-        localStorage.setItem('comments', JSON.stringify(comments));
-
-        // Muestra el nuevo comentario
-        displayComment(name, comment);
-
-        // Limpia el formulario
-        document.getElementById('name').value = '';
-        document.getElementById('comment').value = '';
+// Función para cargar comentarios almacenados
+function loadComments() {
+    const commentsList = document.getElementById('commentsList');
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    commentsList.innerHTML = ''; // Limpiar la lista antes de cargar
+    comments.forEach(comment => {
+        const newComment = document.createElement('div');
+        newComment.innerHTML = `<strong>${comment.name}</strong>: <p>${comment.comment}</p>`;
+        commentsList.appendChild(newComment);
     });
+}
 
+// Evento para enviar el formulario de comentarios
+document.getElementById('commentForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Evita el envío del formulario
+
+    // Obtiene los valores del formulario
+    const name = document.getElementById('name').value;
+    const comment = document.getElementById('comment').value;
+
+    // Almacenar el comentario en localStorage
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    comments.push({ name, comment });
+    localStorage.setItem('comments', JSON.stringify(comments));
+
+    // Limpia el formulario
+    document.getElementById('name').value = '';
+    document.getElementById('comment').value = '';
+
+    // Agregar el nuevo comentario a la lista
+    loadComments(); // Cargar comentarios actualizados
+});
+
+// Evento para el botón de reiniciar comentarios
+document.getElementById('resetButton').addEventListener('click', function() {
+    // Borrar los comentarios de localStorage
+    localStorage.removeItem('comments');
+    // Limpiar la lista de comentarios en la página
+    document.getElementById('commentsList').innerHTML = '';
+});
+        
     </script>
 </body>
 </html>
