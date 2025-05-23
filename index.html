@@ -278,6 +278,7 @@
         }
 
 
+
         .chatbot-iframe {
             width: 417px;
             height: 595px;
@@ -406,6 +407,7 @@
             <div id="chatbot-popup" class="chatbot-popup">
                 <iframe src="https://bot.orimon.ai/deploy/index.html?tenantId=0374cec7-ec14-4085-94b3-3aa734a598e6&testBot=true&defaultOpen=true" class="chatbot-iframe"></iframe>
             </div>
+
         </section>
 
 
@@ -585,14 +587,14 @@
     });
 
     // Evento para el botón de reiniciar comentarios
-    document.getElementById('resetButton').addEventListener('click', function() {
+        document.getElementById('resetButton').addEventListener('click', function() {
         // Borrar los comentarios de localStorage
         localStorage.removeItem('comments');
         // Limpiar la lista de comentarios en la página
         document.getElementById('commentsList').innerHTML = '';
     });
 
-    document.getElementById('chatbot-button').addEventListener('click', function() {
+        document.getElementById('chatbot-button').addEventListener('click', function() {
         const popup = document.getElementById('chatbot-popup');
         popup.classList.toggle('show'); // Alternar la clase 'show' para abrir y cerrar
     });
