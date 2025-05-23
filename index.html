@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" href="isotipo.jpeg" type="image/png">
+    <title>Adminline</title>
+    <style>
+        :root {
+            --primary-color: #5f62ff;
+            --secondary-color: #3fc9ff;
+            --text-color: #ffffff;
+            --background-color: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: var(--background-color);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #ab57ff;
+            transform: translateY(-2px);
+        }
+
+        .image-container {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 5%;
+        position: relative;
+        background: url('WhatsApp Image 2025-04-10 at 10.24.08 AM (1).jpeg') no-repeat center center/cover;
+        }
+
+        .image-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:rgba(0, 0, 0, 0.5); /* Fondo negro con 50% de opacidad */
+        z-index: 1;
+        }
+
+        .img-contenido {
+            position: relative;
+            z-index: 2; /* Asegura que el contenido esté por encima de la capa opaca */
+        }
+
+        .img-contenido h1 {
+            font-size: 3rem; /* Tamaño de fuente aumentado */
+            color: #FFFFFF; /* Color del texto */
+            opacity: 1; /* Asegúrate de que sea visible */
+            transform: translateY(0); /* Asegúrate de que no esté desplazado */
+            animation: none; /* Desactiva la animación si es necesario */
+        }
+        .img-contenido h2,
+        .img-contenido p {
+            color: #FFFFFF; /* Color del texto */
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 5rem 5%;
+            background: rgb(0, 0, 0);
+        }
+
+        .feature-card {
+            display: flex; /* Usar flexbox para la tarjeta */
+            flex-direction: row; /* Alinear elementos en fila */
+            align-items: center; /* Centrar verticalmente */
+            flex: 1 1 300px; /* Flex-grow, flex-shrink, flex-basis */
+            margin: 1rem;
+            padding: 2rem;
+            border-radius: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 4px 20px rgba(215, 215, 215, 0.5);
+            transition: transform 0.5s ease;
+        }
+
+        .feature-card img {
+            max-width: 150px; /* Ancho fijo para la imagen */
+            height: auto; /* Mantiene la proporción de la imagen */
+            border-radius: 10px; /* Bordes redondeados para la imagen */
+            margin-left: 1rem; /* Espacio entre el texto y la imagen */
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .about-section {
+        padding: 0rem 5%; /* Espaciado superior e inferior */
+        background-color: #000000; /* Color de fondo oscuro */
+        color: #fcfcfc; /* Color del texto */
+        }
+
+        .about-container {
+            display: flex; /* Usar flexbox para alinear el contenido */
+            flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+            justify-content: space-between; /* Espacio entre los elementos */
+        }
+
+        .about-content {
+            flex: 1; /* Permitir que el contenido ocupe el espacio disponible */
+            min-width: 300px; /* Ancho mínimo para el contenido */
+            margin-right: 2rem; /* Espacio a la derecha */
+        }
+
+        .about-image {
+            flex: 1; /* Permitir que la imagen ocupe el espacio disponible */
+            display: flex; /* Usar flexbox para centrar la imagen */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+
+        .about-image img {
+            max-width: 50%; /* Asegurarse de que la imagen no exceda el ancho del contenedor */
+            height: auto; /* Mantener la proporción de la imagen */
+            border-radius: 20px; /* Bordes redondeados para la imagen */
+        }
+
+        .comments-section {
+            padding: 2rem;
+            width: 98%;
+            border-radius: 20px;
+             box-shadow: 0 4px 20px rgba(215, 215, 215, 0.5);
+            background: linear-gradient(45deg, #5f62ff, #3fc9ff);
+            color: #000000 ;
+
+            transition: transform 0.5s ease;
+        }
+
+        .comments-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        #commentForm {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #name, #comment {
+            margin-bottom: 1rem;
+            padding: 10px;
+            border: 1px solid #fcfcfc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #2f37d4;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #6d56ec;
+        }
+
+        #commentsList {
+            margin-top: 1rem;
+        }
+
+
+
+       .chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 150px; /* Ancho del botón */
+            height: 150px; /* Alto del botón */
+            border-radius: 100px; /* Hacer el botón circular */
+            background-color: #2f37d400; /* Color de fondo del botón */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0); /* Sombra del botón */
+        }
+
+        .chatbot-button img {
+            width: 150px; /* Ajusta el tamaño de la imagen */
+            height: auto; /* Mantiene la proporción de la imagen */
+            border-radius: 20px;
+        }
+
+        .tooltip {
+            visibility: visible; /* Oculto por defecto */
+            width: 130px; /* Ancho del tooltip */
+            background-color: #8a8a8a8c; /* Fondo del tooltip */
+            color: #eaeaea; /* Color del texto */
+            text-align: center; /* Centrar el texto */
+            border-radius: 5px; /* Bordes redondeados */
+            padding: 5px; /* Espaciado interno */
+            position: absolute; /* Posición absoluta */
+            bottom: 160px; /* Posición del tooltip */
+            right: 50%; /* Centrar el tooltip */
+            transform: translateX(50%); /* Ajustar la posición */
+            z-index: 1001; /* Asegurarse de que esté por encima */
+            transition: visibility 0s, opacity 0.5s linear; /* Transición */
+            opacity: 0; /* Inicialmente invisible */
+        }
+
+        .chatbot-button:hover .tooltip {
+            visibility: visible; /* Mostrar el tooltip al pasar el mouse */
+            opacity: 1; /* Hacerlo visible */
+        }
+
+
+        .chatbot-popup {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            bottom: -65px; /* Espacio entre el botón y la ventana */
+            right: 180px;
+            width: 450px; /* Ancho de la ventana, ajusta según el tamaño del chatbot */
+            height: 600px; /* Alto de la ventana, ajusta según el tamaño del chatbot */
+            border: 1px solid #cccccc00;
+            border-radius: 22px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+            background-color: rgba(255, 255, 255, 0);
+            z-index: 1000;
+            opacity: 0; /* Inicialmente invisible */
+            transform: translateY(20px); /* Desplazado hacia abajo */
+            transition: opacity 1.5s ease, transform 1.5s ease; /* Animación */
+        }
+
+        .chatbot-popup.show {
+            display: block; /* Mostrar la ventana */
+            opacity: 1; /* Hacerla visible */
+            transform: translateY(1.5s); /* Regresar a su posición original */
+        }
+
+        .chatbot-iframe {
+            width: 417px;
+            height: 595px;
+            border: none; /* Sin borde */
+            border-radius: 10px; /* Bordes redondeados */
+        }
+
+        .integrantes {
+            text-align: center; /* Centra el texto */
+            padding: 2rem 0; /* Espaciado superior e inferior */
+           background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); /* Color de fondo */
+            color: #fff; /* Color del texto */
+        }
+
+        .integrantes-container {
+            display: flex; /* Usar flexbox para alinear los integrantes */
+            justify-content: center; /* Centra los elementos */
+            flex-wrap: wrap; /* Permite que los elementos se envuelvan en varias líneas */
+            gap: 2rem; /* Aumentar el espacio entre los integrantes */
+        }
+
+        .integrante {
+            text-align: center; /* Centra el texto de cada integrante */
+            padding: 1rem 0;
+            flex: 1 1 200px; /* Permite que los integrantes se ajusten en el espacio disponible */
+        }
+
+        .integrante img {
+            max-width: 200px; /* Ajusta el tamaño de las imágenes */
+            height: auto; /* Mantiene la proporción de las imágenes */
+            border-radius: 10px; /* Bordes redondeados */
+            mask-image: linear-gradient( black 45px,transparent);
+        }
+
+        footer {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #050505;
+            text-align: center;
+            padding: 2rem 5%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="logo fondo negro.jpeg" alt="Logo de Adminline" height="95" width="150"></div>
+        <nav class="nav-links">
+            <a href="#home">Inicio</a>
+            <a href="#features">Servicios</a>
+            <a href="#comments">Comentarios</a>
+            <a href="#integrantes">Integrantes</a> <!-- Enlace a la sección de integrantes -->
+        </nav>
+    </header>
+
+    <main>
+        <section class="image-container" id="image-container">
+            <div class="img-contenido">
+                <h1>AdminLine</h1>
+                <h2>¿Quienes somos?</h2>
+                <p>Somos un emprendimiento conformado por diecisiete (17) socios que brinda a diversas entidades de trabajo estrategias de automatización de procesos para simplificar y optimizar tareas administrativas, reduciendo costos y tiempo para quienes contratan nuestros servicios.</p>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="feature-card">
+                <div>
+                    <h3>Misión</h3>
+                    <p>Ser reconocidos por impulsar la transformación empresarial mediante estrategias especializadas en ventas, servicio al cliente, capacitación y marketing digital.</p>
+                </div>
+                <img src="logotipo.png" alt="Descripción de la imagen 1"> <!-- Imagen para la tarjeta -->
+            </div>
+
+            <div class="feature-card">
+                <div>
+                    <h3>Visión</h3>
+                    <p>Ser reconocidos por impulsar la transformación empresarial mediante estrategias especializadas en ventas, servicio al cliente, capacitación y marketing digital.</p>
+                </div>
+                <img src="logotipo.png" alt="Descripción de la imagen 1"> <!-- Imagen para la tarjeta -->
+            </div>
+            <div class="feature-card">
+                <div>
+                    <h3>Servicios</h3>
+                    <ul>
+                        <li>Automatización de procesos</li>
+                        <li>Gestión de ventas</li>
+                        <li>Servicio al cliente</li>
+                        <li>Capacitación y actualización del personal</li>
+                    </ul>
+                </div>
+                <img src="logotipo.png" alt="Descripción de la imagen 2"> <!-- Imagen para la tarjeta -->
+            </div>
+            <div class="feature-card">
+                <div>
+                    <h3>Valores Institucionales</h3>
+                    <ul>
+                        <li>Innovación</li>
+                        <li>Compromiso</li>
+                        <li>Calidad</li>
+                    </ul>
+                </div>
+                <img src="logotipo.png">
+                <img src="logotipo.png"> <!-- Imagen para la tarjeta -->
+                  <img src="logotipo.png">
+                  <img src="logotipo.png">
+                  <img src="logotipo.png">
+            </div>
+
+            
+
+            <div class="comments-section" id="comments">
+                <h2>Comentarios</h2>
+                <form id="commentForm">
+                    <input type="text" id="name" placeholder="Tu nombre" required>
+                    <textarea id="comment" placeholder="Tu comentario" required></textarea>
+                    <button type="submit">Enviar Comentario</button>
+                    <br>
+                    <button id="resetButton">↩️​</button> <!-- Botón para reiniciar -->
+                </form>
+            <div id="commentsList"></div>
+        </section>
+
+
+        
+        <section id="about" class="about-section">
+        <div class="container about-container">
+            <div class="about-content reveal revealed">
+                <h2>Transformando empresas</h2>
+                <h3>Innovación tecnológica a tu alcance</h3>
+                <p>En Adminline, entendemos los desafíos que enfrentan las empresas modernas en un entorno digital en constante evolución. Nuestra misión es proporcionar soluciones tecnológicas avanzadas que simplifiquen la gestión empresarial.</p>
+                <p>Con años de experiencia en el sector, nuestro equipo de expertos desarrolla herramientas intuitivas y eficientes que se adaptan perfectamente a las necesidades específicas de cada cliente.</p>
+                <p>Nos enorgullece ofrecer un servicio personalizado y un soporte técnico de primer nivel, garantizando que nuestros clientes aprovechen al máximo nuestras soluciones.</p>
+            </div>
+            
+            <div class="about-image reveal revealed">
+                <img src="isotipo.jpeg">
+            </div>
+        </div>
+        </section>
+
+
+    <br>
+
+        <section class="integrantes" id="integrantes">
+            <h2>Integrantes</h2>
+            <div class="integrantes-container">
+                <div class="integrante">
+                    <img src="yehiber.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                <div class="integrante">
+                    <img src="ambar3.0.png" alt="Integrante 1">
+                    <h3>Nombre 1</h3>
+                    <p>cargo</p>
+                </div>
+                
+                
+                <!-- Agrega más integrantes según sea necesario -->
+            </div>
+
+            <section>
+            <div id="chatbot-button" class="chatbot-button">
+                <img src="ambar3.0.png" alt="Chat" class="chatbot-icon"> <!-- Imagen del botón -->
+                <div class="tooltip">Soy Ambar, ¿en que te puedo ayudar?</div> <!-- Tooltip -->
+            </div>
+            <div id="chatbot-popup" class="chatbot-popup">
+                <iframe src="https://bot.orimon.ai/deploy/index.html?tenantId=0374cec7-ec14-4085-94b3-3aa734a598e6&testBot=true&defaultOpen=true" class="chatbot-iframe"></iframe>
+            </div>
+        </section>
+
+        </section>
+    </main>
+
+    <footer>
+        <p> © 2023 Adminline. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+
+         // Smooth scroll para los enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Al cargar la página, asegurarse de que la caja de comentarios esté vacía
+    window.onload = function() {
+        loadComments(); // Cargar comentarios almacenados
+    };
+
+    // Función para cargar comentarios almacenados
+    function loadComments() {
+        const commentsList = document.getElementById('commentsList');
+        const comments = JSON.parse(localStorage.getItem('comments')) || [];
+        commentsList.innerHTML = ''; // Limpiar la lista antes de cargar
+        comments.forEach(comment => {
+            const newComment = document.createElement('div');
+            newComment.innerHTML = `<strong>${comment.name}</strong>: <p>${comment.comment}</p>`;
+            commentsList.appendChild(newComment);
+        });
+    }
+
+    // Evento para enviar el formulario de comentarios
+    document.getElementById('commentForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita el envío del formulario
+
+        // Obtiene los valores del formulario
+        const name = document.getElementById('name').value;
+        const comment = document.getElementById('comment').value;
+
+        // Almacenar el comentario en localStorage
+        const comments = JSON.parse(localStorage.getItem('comments')) || [];
+        comments.push({ name, comment });
+        localStorage.setItem('comments', JSON.stringify(comments));
+
+        // Limpia el formulario
+        document.getElementById('name').value = '';
+        document.getElementById('comment').value = '';
+
+        // Agregar el nuevo comentario a la lista
+        loadComments(); // Cargar comentarios actualizados
+    });
+
+    // Evento para el botón de reiniciar comentarios
+    document.getElementById('resetButton').addEventListener('click', function() {
+        // Borrar los comentarios de localStorage
+        localStorage.removeItem('comments');
+        // Limpiar la lista de comentarios en la página
+        document.getElementById('commentsList').innerHTML = '';
+    });
+
+    document.getElementById('chatbot-button').addEventListener('click', function() {
+        const popup = document.getElementById('chatbot-popup');
+        popup.classList.toggle('show'); // Alternar la clase 'show' para abrir y cerrar
+    });
+
+    
+        // Resto del código JavaScript...
+    </script>
+</body>
+</html>
